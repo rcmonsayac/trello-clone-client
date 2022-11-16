@@ -1,0 +1,20 @@
+<div class="sidebar">
+  <div class="flex my-2">
+    <%= link to: Routes.home_path(TrelloCloneClientWeb.Endpoint, :index) do%>
+      <svg class="h-10 w-10 font-bold <%= if @active == "home", do: "text-gray-100", else: "text-gray-500" %>"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="5 12 3 12 12 3 21 12 19 12" />  
+        <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />  
+        <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+      </svg>
+    <% end %>
+  </div>
+  <div class="flex">
+    <%= link to: Routes.board_path(TrelloCloneClientWeb.Endpoint, :index) do%>
+      <svg class="h-10 w-10 font-bold <%= if @active == "board", do: "text-gray-100", else: "text-gray-500" %>"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" 
+        stroke-linejoin="round" 
+        stroke-width="2" 
+        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>  
+      </svg>
+    <% end %>
+  </div>
+</div>

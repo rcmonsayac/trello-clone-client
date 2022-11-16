@@ -1,0 +1,21 @@
+
+<div class="modal-nav">
+  <div class="tab <%= if @view == "details", do: "active" %>" phx-click="change_view" phx-value-view="details">
+    Details
+  </div>
+  <div class="tab <%= if @view == "comments", do: "active" %>"  phx-click="change_view" phx-value-view="comments">
+    Comments
+  </div>
+
+</div>
+
+<div>
+  <%= case @view do %>
+    <% "details" ->  %>
+      <%= render TrelloCloneClientWeb.TaskView, "details.html", assigns %>
+    <% "comments" ->  %>
+      <%= render TrelloCloneClientWeb.TaskView, "comments.html", assigns %>
+  <% end %>
+</div>
+
+<%= render_live_flash(@flash_message) %>

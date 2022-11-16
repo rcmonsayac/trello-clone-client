@@ -1,0 +1,44 @@
+  <section class="absolute w-full h-full">
+    <div class="container mx-auto px-4 h-full">
+      <div class="flex content-center items-center justify-center h-full">
+        <div class="w-full h-full flex items-center xl:w-4/12 px-4">
+          <div class="relative h-auto flex py-10 flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300 border-0">
+            <div class="text-gray-500 text-center mb-10 font-bold">
+              <div class="text-2xl">Sign in with credentials</div>
+            </div>
+            <div class="flex-col items-center px-4 lg:px-10 py-10 pt-0">
+              <%= f = form_for @changeset, "#", [phx_submit: :signin] %>
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                    for="grid-password">Email</label>
+                  <%= text_input f, :email, autocomplete: "off", placeholder: "name@company.com", class: "email-input" %>
+                  <div>
+                    <%= error_tag f, :email %>
+                  </div>
+
+                </div>
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                    for="grid-password">Password</label>
+                    <%= password_input f, :password, value: input_value(f, :password), placeholder: "Minimum of 6 characters", class: "password-input" %>
+                    <div>
+                      <%= error_tag f, :password %>
+                    </div>
+  
+                </div>
+                <div class="text-center mt-6">
+                  <%= submit "Sign in", phx_disable_with: "Signing in...", class: "submit-btn" %>
+                </div>
+              </form>
+              <hr class="mt-6 border-b-1 border-gray-400" />
+              <div class="text-center">
+                <div><small>or</small></div>
+                 <div class="hover:underline"><%= link "Register new account", to: Routes.registration_path(TrelloCloneClientWeb.Endpoint, :index)%>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <%= render_live_flash(@flash_message) %>

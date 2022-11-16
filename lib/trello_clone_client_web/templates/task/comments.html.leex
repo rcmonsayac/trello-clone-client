@@ -1,0 +1,27 @@
+
+<div class="comments-container mb-5" id=<%= "task_comments_#{hash(@current_task.id)}" %> phx-hook="ScrollBottom">
+  <div>
+    <%= for comment <- sort(@comments, :inserted_at) do %>
+      <div class="comment-card <%= if comment.created_by_id == @current_user.id, do: "justify-end" %>">
+        <div class="comment-content"><span class="mb-2 font-bold inline-block"><%= comment.created_by_user.email%></span>
+          <%= comment.content%></div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<%= if @add_comment do %>
+  <div class="form mb-10">
+    <%= f = form_for @comment_changeset, "#", phx_change: "update_comment_changeset", phx_submit: "create_comment", id: "comment_form" %>
+        <%= textarea f, :content, class: "comment-input mb-2", id: "comment_input_id", placeholder: "Add comment", required: true, phx_hook: "Focus", data_focus: "true" %>
+      <%= hidden_input f, :task_id, value: @current_task.id, class: "text-input" %>
+      <div class="buttons">
+        <button class="create-btn btn mr-3" type="submit" phx-disable-with="Adding...">Add</button>
+        <button class="cancel-btn btn" type="button" phx-click="cancel_add_comment">Cancel</button>
+      </div>
+    </form>
+  </div> 
+  <% else %>
+  <div class="form">
+    <textarea class="comment-input" placeholder="Add comment" phx-click="add_comment" disabled></textarea>
+  </div>
+<% end %>

@@ -1,0 +1,30 @@
+.section {
+  @apply absolute w-full h-full flex;
+  padding-top: 80px;
+  padding-left: 150px;
+
+  .header {
+    @apply text-4xl font-bold uppercase text-gray-200 mb-8;
+  }
+
+  .card {
+    height: 200px;
+    width: 200px;
+    @apply bg-gray-300 rounded-lg mr-3 mb-3 p-3 cursor-pointer bg-white text-gray-800 hover:bg-gray-700 hover:text-gray-100;
+    transition: all 0.15s ease 0s;
+    .card-title {
+      @apply text-2xl mb-5 font-bold uppercase;
+    }
+
+  }
+  .btn {
+    @apply flex items-center font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none;
+  }
+  .new-btn {
+    background-color: #1873D3;
+    @apply text-gray-100 hover:bg-gray-100 hover:text-gray-800 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none;
+    transition: all 0.15s ease 0s;
+  }
+}
+
+

@@ -1,0 +1,78 @@
+<div class="title">Manage Board</div>
+
+
+<%= if @invite do %>
+  <div class="mb-3">
+    <%= f = form_for :user, "#", as: :user, phx_change: "search_user", class: "form" %>
+      <%= text_input f, :email, class: "search-input w-full", placeholder: "Search User", value: (if @invite_member, do: @invite_member.email, else: @search_query), autocomplete: "off", phx_hook: "Focus", data_focus: "true", phx_debounce: 200, phx_blur: "cancel_invite" %>
+      <button type="submit" disabled style="display: none" aria-hidden="true"></button>
+    </form>
+    <%= case @results do%>
+      <% nil -> %>
+      <% [] -> %>
+        <div class="search-results">
+          <div class="item">
+            <div class="text-xs">No users found</div>
+          </div>
+        </div>
+      <% _ -> %>
+        <div class="search-results">
+          <%= if @search_query == "" do%>
+          <% end %>
+          <%= for user <- @results do %>
+            <div class="item" phx-click="change_invite" phx-value-user_id="<%= user.id %>" ><%= user.email %></div>
+          <% end %>
+        </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="form">
+    <input class="search-input w-full mb-3" phx-click="invite" placeholder="Invite member" value=<%= if @invite_member, do: @invite_member.email, else: @search_query %>>
+  </div>
+<% end %>
+<button class="create-btn btn mb-5 inline-block" phx-click="invite_member">Invite</button>
+
+<div class="text-xl font-medium text-gray-100 mb-4">Members</div>
+<div>
+  <%= for permission <- @board_permissions do %>
+    <div class="flex mb-3">
+      <div class="member-email"><%= permission.user.email %></div>
+      <div>
+        <div class="" id="board-permission-dropdown-<%= permission.id %>" phx-hook="Dropdown" data-target="#permission-dropdown-<%= permission.id %>" data-trigger="#permission-button-<%= permission.id %>">
+          <button class="button-dropdown p-2" id="permission-button-<%= permission.id %>" type="button" >
+            <span class="text"><%= permission_to_label(permission.permission_type) %></span>
+            <svg class="h-6 w-6 text-black"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  
+              <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button> 
+          <div phx-update="ignore">
+            <div class="dropdown-menu hidden options" id="permission-dropdown-<%= permission.id %>" >
+              <%= for permission_type <- board_permission_types() do %>
+                <div
+                  class="item p-2"
+                  phx-value-permission_type="<%= permission_type %>"
+                  phx-value-permission_id="<%= permission.id %>"
+                  phx-click="change_permission"
+                >
+                  <%= permission_to_label(permission_type) %>
+                </div>
+              <% end %>
+              <div
+                class="item p-2 text-red-500"
+                id=<%= "delete-permission-#{permission.id}" %>
+                phx-value-permission_id="<%= permission.id %>"
+                phx-click="remove_permission"
+                phx-hook="ConfirmDialog" 
+                data-message="Are you sure you want to remove this permission?"
+              >
+                Remove access
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <% end %>
+</div>
+<%= render_live_flash(@flash_message) %>

@@ -1,0 +1,27 @@
+
+<div class="title">Create Board</div>
+<div class="form mb-10">
+  <%= f = form_for @changeset, "#", phx_submit: "create", id: "board_form" %>
+    <div class="relative w-full mb-6">
+      <label class="block uppercase text-gray-100 font-bold mb-2">Title</label>
+      <%= text_input f, :title, autocomplete: "off", class: "text-input" %>
+      <div>
+        <%= error_tag f, :title %>
+      </div>
+    </div>
+    <div class="relative w-full mb-3">
+      <label class="block uppercase text-gray-100 font-bold mb-2">Short Description</label>
+      <%= text_input f, :description, autocomplete: "off", class: "text-input" %>
+      <div>
+        <%= error_tag f, :description %>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="buttons">
+  <button class="create-btn btn mr-3" phx-disable-with="Creating..." form="board_form">Create</button>
+  <button class="cancel-btn btn" phx-click="cancel">Cancel</button>
+</div>
+
+
+<%= render_live_flash(@flash_message) %>

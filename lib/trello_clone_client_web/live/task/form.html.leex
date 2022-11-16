@@ -1,0 +1,83 @@
+
+<div class="title">Create Task for <%= @current_list.title %></div>
+<div class="form mb-10">
+  <%= f = form_for @changeset, "#", phx_submit: "create", phx_change: "update_changeset", id: "task_form" %>
+    <div class="w-full mb-5">
+      <label class="block uppercase text-gray-100 mb-2">Title</label>
+      <%= text_input f, :title, autocomplete: "off", class: "text-input" %>
+      <div>
+        <%= error_tag f, :title %>
+      </div>
+    </div>
+    
+    <div class="w-full mb-5">
+      <label class="block uppercase text-gray-100 font-bold mb-2">description</label>
+      <%= textarea f, :description, class: "text-area" %>
+      <div>
+        <%= error_tag f, :description %>
+      </div>
+    </div>
+    <%= hidden_input f, :board_id, value: @board_id %>
+    <%= hidden_input f, :list_id, value: @current_list.id %>
+  </form>
+  <div class="mb-5">
+    <div class="block uppercase text-gray-100 ">Assignee</div> 
+    <%= if @edit_assignee do %>
+      <%= f = form_for :user, "#", as: :user, id: "assignee_form", phx_change: "search_user", class: "form" %>
+        <%= text_input f, :email, class: "search-input", placeholder: "Search User", value: @search_query, autocomplete: "off", phx_hook: "Focus", data_focus: "true", phx_debounce: 200, phx_blur: "cancel_change_assignee" %>
+        <button type="submit" disabled style="display: none" aria-hidden="true"></button>
+      </form>
+  
+      <%= case @results do%>
+        <% nil -> %>
+        <% [] -> %>
+          <div class="search-results">
+            <div class="item" phx-click="update_assignee" phx-value-unassign="true">
+              <div class="text-xs">No users found</div>
+              Not Assigned
+            </div>
+          </div>
+        <% _ -> %>
+          <div class="search-results">
+            <%= if @search_query == "" do%>
+              <div class="item" phx-click="update_assignee" phx-value-unassign="true">Not Assigned</div>
+            <% end %>
+            <%= for user <- @results do %>
+              <div class="item" phx-click="update_assignee" phx-value-assignee_id="<%= user.id %>"><%= user.email %></div>
+            <% end %>
+          </div>
+      <% end %>
+  
+    <% else %>
+      <div class="text-lg font-bold text-gray-100 mb-5 py-2" phx-click="change_assignee">
+        <%= if @assignee, do: @assignee.email, else: "Not Assigned" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="mb-5" id="task-status-dropdown" phx-hook="Dropdown" data-target="#status-dropdown" data-trigger="#status-button">
+    <button class="button-dropdown p-2" id="status-button" type="button">
+      <span class="text"><%= status_to_label(@task_status) %></span>
+      <svg class="h-6 w-6 text-black"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  
+        <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="6 9 12 15 18 9" />
+      </svg>
+    </button> 
+    <div class="dropdown-menu hidden options" id="status-dropdown">
+      <%= for status <- task_status() do %>
+        <div
+          class="item p-2"
+          phx-value-status="<%= status %>"
+          phx-click="change_status"
+        >
+          <%= status_to_label(status) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+<div class="buttons">
+  <button class="create-btn btn mr-3" phx-disable-with="Creating..." form="task_form">Create</button>
+  <button class="cancel-btn btn" phx-click="cancel">Cancel</button>
+</div>
+<%= render_live_flash(@flash_message) %>

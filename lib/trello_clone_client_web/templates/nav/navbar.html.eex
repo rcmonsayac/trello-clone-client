@@ -1,0 +1,39 @@
+<nav class="nav-bar">
+  <div class="nav-container">
+    <div class="justify-between w-auto static block justify-start" >
+      <a class="nav-title"
+        href="/"
+        > &#128214; TRELLO CLONE</a >
+    </div>
+    <div class="flex flex-grow items-center lg:shadow-none"  >
+      <ul class="flex flex-row list-none ml-auto">
+        <%= case @access_token do %>
+          <% nil -> %>
+            <%= link to: Routes.session_path(TrelloCloneClientWeb.Endpoint, :new) do %>
+              <li class="flex items-center">
+                <button
+                  class="nav-btn"
+                  type="button"> Sign in </button>
+              </li>
+            <% end %>
+            <%= link to: Routes.registration_path(TrelloCloneClientWeb.Endpoint, :index) do %>
+              <li class="flex items-center">
+                <button
+                  class="nav-btn"
+                  type="button"> Register </button>
+            </li>
+            <% end %>
+          <% _access_token -> %>
+            <li class="flex items-center text-gray-200">Hi <%= @current_user.email %>!</li>
+            <%= link to: Routes.session_path(TrelloCloneClientWeb.Endpoint, :logout) do%>
+              <li class="flex items-center">
+                <button
+                  class="nav-btn"
+                  type="button"> Logout </button>
+              </li>
+            <% end %>
+        <% end %> 
+      </ul>
+    </div>
+  </div>
+</nav>

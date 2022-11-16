@@ -1,0 +1,51 @@
+.list-container {
+  @apply flex bg-gray-500 w-full rounded-md pr-3 overflow-x-auto;
+  min-height: 600px;
+  scroll-padding-right: auto;
+  .list-column {
+    width: 300px;
+    @apply m-3 flex-none bg-gray-300 p-2 rounded-md inline-block shadow-md;
+
+    .list-header {
+      @apply flex justify-between mb-2;
+
+      .list-title{
+        width: 250px;
+        @apply font-medium text-2xl break-words;
+      }
+
+      .title-input {
+        @apply border-0 px-1 py-1 text-2xl font-medium placeholder-gray-400 text-gray-700 bg-white rounded shadow focus:outline-none focus:ring w-full;
+      }
+
+      .menu-button {
+        border-radius: 50%;
+        @apply outline-none h-8 w-8 hover:bg-gray-400 flex items-center justify-center;
+        
+      }
+
+      .action-menu {
+        @apply bg-white rounded-sm py-2;
+        width: 80px;
+
+        .item {
+          @apply text-sm text-center font-medium hover:bg-gray-100 p-2;
+        }
+        .item.delete {
+          @apply text-red-500;
+        }
+      }
+
+    }
+    .list-column.sortable-chosen {
+          @apply bg-opacity-0;
+    }
+
+    .create-btn {
+      background-color: #1873D3;
+      @apply text-gray-100 hover:bg-gray-100 hover:text-gray-900 text-xs text-center w-full block;
+    }
+  }
+
+}
+

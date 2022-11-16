@@ -1,0 +1,22 @@
+<div class="task-card _handle modal-button flex flex-col justify-between"
+  data-id="<%= @task.position %>"
+  data-resource-id="<%= @task.id %>"
+  data-type="<%= "task" %>"
+  phx-click="show_task"
+  phx-value-task_id="<%= @task.id %>"
+>
+  <div class="task-title modal-button break-words">
+    <%= @task.title %>
+  </div>
+  <div>
+    <div class="mb-4 modal-button">
+      <%= status_to_label(@task.status) %>
+    </div>
+    <div class="text-xs modal-button">
+      Assigned to: 
+      <div>
+        <%= if @task.assignee_id, do: @task.assignee_user.email, else: "Not Assigned" %>
+      </div>
+    </div>
+  </div>
+</div>

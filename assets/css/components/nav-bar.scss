@@ -1,0 +1,27 @@
+.nav-bar {
+  @apply top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3;
+  height: 80px;
+  z-index: 100;
+  background-color: #0a0f18;
+
+  .nav-container {
+    @apply w-full px-4 flex items-center justify-between;
+  }
+
+  .nav-title {
+    @apply text-2xl font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white;
+  }
+
+
+  .nav-btn {
+    @apply bg-white text-gray-800 hover:bg-gray-700 hover:text-gray-100 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ml-4;
+    transition: all 0.15s ease 0s;
+  }
+}
+
+.sidebar {
+  @apply left-0 fixed h-full flex flex-col items-center bg-gray-700 pt-5;
+  width: 100px;
+  z-index: 100;
+  margin-top: 80px;
+}

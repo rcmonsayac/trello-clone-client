@@ -1,0 +1,13 @@
+<div class="main-page -default">
+  <%= render TrelloCloneClientWeb.NavView, "navbar.html", assigns %>
+  <%= render TrelloCloneClientWeb.NavView, "sidebar.html", assigns %>
+  <%= live_render @conn, Live.Board.Show, 
+      id: "show_board_id",
+      session: %{
+        "access_token" => @access_token,
+        "current_user" => @current_user,
+        "board" => @board,
+        "board_permission" => @board_permission
+      }
+  %>
+</div>

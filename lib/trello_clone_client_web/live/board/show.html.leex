@@ -1,0 +1,102 @@
+<section class="section">
+  <div class="w-full pt-10 pr-10">
+    <div class="header flex items-center">
+      <%= @board.title %>
+    </div>
+
+    <% allow_update = Policies.authorized?(%{assigns: assigns}, :update_board) %>
+    <% allow_manage = Policies.authorized?(%{assigns: assigns}, :manage_board) %>
+
+    <div class="flex">
+      <%= if allow_update do %>
+        <button type="button" class="new-btn btn mr-3 modal-button" phx-click="add_list" phx_value_create="true">
+        New List
+        </button>
+        <%= if allow_manage do %>
+          <button class="new-btn btn mr-3 modal-button" phx-click="manage_members">
+            Manage Members
+          </button>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div class="mt-8" >
+      <div class="list-container" id=<%= "board_#{@board.id}" %> 
+        phx-hook="SortableList"
+        data-enabled=<%= allow_update %>
+        data-ghost-class="-ghost" 
+        data-sortable-list-id="<%= @board.id %>"
+      >
+        <%= for list <- sort(@lists) do %>
+          <%= live_component @socket, TrelloCloneClientWeb.LiveComponents.ListComponent, 
+            id: "list_#{list.id}",
+            current_user: @current_user,
+            access_token: @access_token,
+            board_permission: @board_permission,
+            list: list,
+            tasks: 
+              @tasks
+              |> get_list_tasks(list.id)
+              |> sort
+          %>      
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+
+  <%= case @modal do %>
+    <% :list_form -> %>
+      <div class="modal" phx-hook="ModalClose" id="list_form_modal">
+        <%= live_render @socket, TrelloCloneClientWeb.Live.List.Form,
+          id: "list_form_id",
+          session: %{
+            "access_token" => @access_token,
+            "current_user" => @current_user,
+            "board_id" => @board.id,
+            "board_permission" => @board_permission
+          }
+        %>
+      </div>
+    <% :task_form -> %>
+      <div class="modal" phx-hook="ModalClose" id=<%= "task_form_modal#{hash(@current_list.id)}" %>>
+        <%= live_render @socket, TrelloCloneClientWeb.Live.Task.Form,
+          id: "task_form_#{hash(@current_list.id)}",
+          session: %{
+            "access_token" => @access_token,
+            "current_user" => @current_user,
+            "current_list" => @current_list,
+            "board_id" => @board.id,
+            "board_permission" => @board_permission
+          }
+        %>
+      </div>
+    <% :show_task -> %>
+      <div class="modal" phx-hook="ModalClose" id=<%= "task_show_modal#{hash(@current_task.id)}" %>>
+        <%= live_render @socket, TrelloCloneClientWeb.Live.Task.Show,
+          id: "task_show_#{hash(@current_task.id)}",
+          session: %{
+            "access_token" => @access_token,
+            "current_user" => @current_user,
+            "current_task" => @current_task,
+            "board_id" => @board.id,
+            "board_permission" => @board_permission
+          }
+        %>
+      </div>
+    <% :manage_members -> %>
+      <div class="modal" phx-hook="ModalClose" id=<%= "manage_modal#{hash(@board.id)}" %>>
+        <%= live_render @socket, TrelloCloneClientWeb.Live.Board.Manage,
+          id: "manage_board_#{hash(@board.id)}",
+          session: %{
+            "access_token" => @access_token,
+            "current_user" => @current_user,
+            "board" => @board,
+            "board_permission" => @board_permission
+          }
+        %>
+      </div>
+    <% :nil -> %>
+  <% end %>
+</section>
+<%= render_live_flash(@flash_message) %>

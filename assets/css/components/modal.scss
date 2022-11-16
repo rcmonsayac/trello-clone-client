@@ -1,0 +1,135 @@
+.modal {
+  padding-top: 100px;
+  width: 600px;
+  right: -600px;
+  animation: slide-in 0.5s forwards;
+  animation-delay: 0s;
+  z-index: 50;
+
+  .modal-nav {
+    @apply flex mb-8 border-b;
+    .tab{
+      @apply text-gray-100 text-lg uppercase p-4 py-2 rounded-t-sm cursor-pointer hover:bg-gray-500;
+      &.active {
+        @apply bg-gray-500;
+      }
+    }
+  }
+
+  @apply bg-gray-700 fixed top-0 border-l border-gray-400 shadow-md bottom-0 px-10;
+  .form {
+    .text-input {
+      @apply border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-lg shadow focus:outline-none focus:ring w-full;
+      transition: all 0.15s ease 0s;
+    }
+    .search-input {
+      @apply text-gray-700 bg-gray-300 text-lg font-bold inline-block rounded-lg px-3 py-2 outline-none;
+      width: 500px;
+    }
+    .text-area {
+      @apply border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-lg shadow focus:outline-none focus:ring w-full;
+      transition: all 0.15s ease 0s;
+      height: 200px;
+      resize: none;
+    }
+
+    .title-input {
+      @apply border-0 px-1 py-1 text-2xl font-medium placeholder-gray-400 text-gray-700 bg-white rounded shadow focus:outline-none focus:ring w-full;
+    }
+
+    .comment-input {
+      @apply text-gray-700 bg-gray-300 inline-block rounded-md px-3 py-2 outline-none w-full;
+      resize: none;
+      height: 80px;
+    }
+  }
+  .form-btn {
+    @apply outline-none hover:bg-gray-500 flex items-center justify-center rounded-sm;
+  }
+
+  .search-results {
+    width: 500px;
+    z-index: 100;
+    max-height: 300px;
+    overflow-y: auto;
+    @apply bg-white rounded-sm absolute border-2;
+    .item {
+      @apply text-gray-700 hover:bg-gray-300 text-lg px-2 py-3;
+    }
+  }
+
+  .edit-btn {
+    @apply outline-none p-1 hover:bg-gray-500 flex items-center justify-center rounded-sm;
+  }
+
+  .button-dropdown {
+    @apply inline-block flex items-center justify-center border-0 placeholder-gray-400 text-gray-700 bg-white rounded shadow focus:outline-none;
+    width: 150px;
+    transition: all 0.15s ease 0s;
+  }
+
+  .options {
+    @apply bg-gray-200 rounded-sm shadow focus:outline-none ring;
+    width: 150px;
+    .item {
+      @apply hover:bg-gray-300 p-2;
+    }
+  }
+
+  .title {
+    max-width: 400px;
+    @apply block text-gray-100 text-2xl font-bold mb-5;
+  }
+
+  .assignee-card {
+    @apply text-gray-700 bg-gray-300 text-lg font-bold inline-block rounded-lg px-3 py-2;
+  }
+
+  .buttons {
+    @apply flex
+  }
+
+  .create-btn {
+    background-color: #1873D3;
+    @apply text-gray-100 hover:bg-gray-100 hover:text-gray-900 text-xs;
+  }
+  .cancel-btn {
+    @apply text-gray-900 bg-gray-200 hover:bg-gray-500 hover:text-gray-200 text-xs;
+  }
+  .delete-btn {
+    @apply text-gray-900 bg-red-500 hover:bg-gray-500 hover:text-gray-200 text-xs;
+  }
+
+  .comments-container {
+    max-height: 550px;
+    @apply overflow-y-auto flex flex-col;
+
+    .comment-card {
+      @apply flex whitespace-pre-wrap mb-3 mx-1;
+      .comment-content {
+        @apply text-gray-700 bg-gray-300 inline-block rounded-md px-3 py-2 w-11/12;
+      }
+    }
+  }
+
+  .member-email {
+    @apply w-4/5 px-1 py-2 text-gray-200;
+   }
+}
+
+@-webkit-keyframes slide {
+  100% { right: 0; }
+}
+
+@keyframes slide {
+  100% { right: 0; }
+}
+
+@keyframes slide-in {
+  to {right: 0px;}
+}
+
+@keyframes slide-out {
+  from { right: 0px }
+  to {right: -600px;}
+}

@@ -1,0 +1,20 @@
+
+<div class="title">Create List</div>
+<div class="form mb-10">
+  <%= f = form_for @changeset, "#", phx_submit: "create", id: "list_form" %>
+    <div class="relative w-full mb-6">
+      <label class="block uppercase text-gray-100 font-bold mb-2">Title</label>
+      <%= text_input f, :title, autocomplete: "off", class: "text-input" %>
+      <div>
+        <%= error_tag f, :title %>
+      </div>
+    </div>
+    <%= hidden_input f, :board_id, value: @board_id, class: "text-input" %>
+  </form>
+</div>
+<div class="buttons">
+  <button class="create-btn btn mr-3" phx-disable-with="Creating..." form="list_form">Create</button>
+  <button class="cancel-btn btn" phx-click="cancel">Cancel</button>
+</div>
+
+<%= render_live_flash(@flash_message) %>

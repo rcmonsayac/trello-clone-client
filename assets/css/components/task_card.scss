@@ -1,0 +1,19 @@
+
+.tasks-container {
+  @apply flex flex-col items-center;
+  min-height: 500px;
+  .task-card {
+    transform: translate(0, 0);
+    min-height: 150px;
+    width: 250px;
+    @apply bg-gray-200 mb-3 p-2 cursor-pointer bg-gray-100 rounded-md text-gray-800 outline-none shadow-md;
+    border: 1px;
+    .task-title {
+      @apply text-lg mb-5 font-semibold;
+    }
+  }
+  .task-card.sortable-chosen {
+    transform: translate(0, 0);
+    @apply bg-opacity-0;
+  }
+}
